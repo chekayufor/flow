@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import FlowContext from '../context/flow/flowContext';
 
 import M from 'materialize-css/dist/js/materialize.min.js';
@@ -27,6 +27,14 @@ const FlowSubmitModal = () => {
     if (flowName === '') {
       M.toast({ html: 'Please enter Flow name' });
     } else {
+      const newFlowUpd = {
+        _id: currentFlow._id,
+        flowName,
+        elements: flowElements,
+        connections: [],
+        date: new Date(),
+        user: currentFlow.user
+      };
       const newFlow = {
         flowName,
         elements: flowElements,
@@ -34,10 +42,12 @@ const FlowSubmitModal = () => {
         date: new Date()
       };
       console.log({ newFlow });
+      console.log({ newFlowUpd });
       //Post the new Flow
-      currentFlow._id === undefined ? addFlow(newFlow) : updateFlow(newFlow);
-      // addFlow(newFlow);
-      // updateFlow(newFlow);
+      // currentFlow._id === null ? addFlow(newFlow) : updateFlow(newFlowUpd);
+      addFlow(newFlow);
+      // updateFlow(newFlowUpd);
+
       // Clear Fields
       setFlowName('');
       setFlowElements(null);

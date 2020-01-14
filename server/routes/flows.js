@@ -44,8 +44,7 @@ router.post(
 
         const { flowName, elements: el, connections: con, date } = req.body;
         console.log('req.body ', req.body);
-        // const { id, name, valid, age, color, top, left } = el;
-        // const { elIdFrom, elIdTo } = con;
+
         try {
             const newFlow = new Flow({
                 flowName,
@@ -69,35 +68,22 @@ router.post(
 // @desc      Update contact
 // @access    Private
 router.put('/:id', auth, async (req, res) => {
-    res.send('Update flows');
+    // res.send('Update flows');
     const { flowName, elements: el, connections: con, date } = req.body;
     console.log('req.body ', req.body);
-    // const { id, name, valid, age, color, top, left } = el;
-    // const { elIdFrom, elIdTo } = con;
-
-    // Build contact object
-    const flowFields = {};
-    // const el = {};
-    // const con = {};
-    if (flowName) flowFields.flowName = flowName;
-    if (elements) flowFields.elements = [el];
-    if (connections) flowFields.connections = [con];
-    // el.forEach(el => {
-    //     if (id) el.id = id;
-    //     if (name) el.name = name;
-    //     if (valid) el.valid = valid;
-    //     if (age) el.age = age;
-    //     if (color) flowFields.elements.color = color;
-    //     if (top) el.top = top;
-    //     if (left) el.left = left;
-    // })
-    // con.forEach(con => {
-    //     if (elIdFrom) con.elIdFrom = elIdFrom;
-    //     if (elIdTo) con.elIdTo = elIdTo;
-    // })
+    const { id, name, valid, age, color, top, left } = el;
+    const { elIdFrom, elIdTo } = con;
 
 
     try {
+        const newFlow = new Flow({
+            _id: req.flow.id,
+            flowName,
+            elements: [...el],
+            connections: [...con],
+            date,
+            user: req.user.id
+        })
         let flow = await Flow.findById(req.params.id);
         console.log({ flow });
 
@@ -111,10 +97,9 @@ router.put('/:id', auth, async (req, res) => {
 
         flow = await Flow.findByIdAndUpdate(
             req.params.id,
-            { $set: flowFields },
+            { $set: newFlow },
             { new: true } // if this flow does not exists let create it
         );
-
         res.json(flow);
     } catch (err) {
         console.error(err.message);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 // import TechSelectOptions from '../techs/TechSelectOptions';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import FlowContext from '../context/flow/flowContext';
 
 // import { addLog } from '../../actions/logActions';

@@ -1,19 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import uuid from 'uuid';
+import React, { useContext, useEffect } from 'react';
 
 import FlowContext from '../context/flow/flowContext';
-import AuthContext from '../context/auth/authContext';
 
 const DragDropField = props => {
   const flowContext = useContext(FlowContext);
-  const authContext = useContext(AuthContext);
-  const {
-    setCurrentFlow,
-    currentFlow,
-    setFlowElements,
-    flowElements
-  } = flowContext;
+  const { setCurrentFlow, setFlowElements, flowElements } = flowContext;
 
   useEffect(() => {
     const newFlow = {
@@ -23,6 +14,7 @@ const DragDropField = props => {
       date: new Date()
     };
     setCurrentFlow(newFlow);
+    //eslint-disable-next-line
   }, []);
 
   const drop = e => {

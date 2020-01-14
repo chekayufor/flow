@@ -14,12 +14,9 @@ import {
     CLEAR_FILTER,
     FILTER_FLOWS,
     SET_CURRENT_ELEMENT,
-    SET_AGE,
-    SET_COLOR,
     SET_LOADING,
     SET_ELEMENTS,
     UPDATE_ELEMENT,
-    SET_FLOW_NAME,
     DELETE_ELEMENT
 } from '../types';
 

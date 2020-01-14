@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import AuthContext from '../context/auth/authContext';
-import FlowContext from '../context/flow/flowContext';
+// import FlowContext from '../context/flow/flowContext';
 //modal window
 import AddModal from '../flows/AddModal';
 import FlowModal from '../flows/FlowModal';
@@ -15,7 +15,7 @@ import FlowField from '../flows/FlowField';
 //style
 import styled from 'styled-components';
 import 'materialize-css/dist/css/materialize.min.css';
-import M from 'materialize-css/dist/js/materialize.min.js';
+// import M from 'materialize-css/dist/js/materialize.min.js';
 
 const Home = () => {
   const authContext = useContext(AuthContext);

@@ -1,14 +1,13 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import FlowContext from '../context/flow/flowContext';
 
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 const Element = ({ el }) => {
-  const [backColor, setBackColor] = useState('');
   const flowContext = useContext(FlowContext);
   const { setCurrentElement } = flowContext;
-  const { age, color, id, left, name, top, valid, _id } = el;
+  const { color, name } = el;
 
   // console.log(el.name);
   const liColor = () => {

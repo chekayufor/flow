@@ -1,5 +1,5 @@
-import React, { useEffect, useContext, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useContext } from 'react';
+// import PropTypes from 'prop-types';
 import FlowContext from '../context/flow/flowContext';
 import Preloader from '../layout/Preloader';
 

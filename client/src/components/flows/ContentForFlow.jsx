@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import uuid from 'uuid';
-import Draggable from '../flows/Draggable';
 
 const ContentForFlow = props => {
   const ref = useRef(null);

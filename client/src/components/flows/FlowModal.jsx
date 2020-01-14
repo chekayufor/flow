@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useContext } from 'react';
+// import PropTypes from 'prop-types';
 import M from 'materialize-css/dist/js/materialize.min.js';
 import FlowContext from '../context/flow/flowContext';
 import FlowListSelectOptions from './FlowListSelectOptions';
