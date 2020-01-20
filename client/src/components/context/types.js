@@ -27,3 +27,5 @@ export const UPDATE_ELEMENT = 'UPDATE_ELEMENT';
 export const SET_FLOW_NAME = 'SET_FLOW_NAME';
 export const DELETE_ELEMENT = 'DELETE_ELEMENT';
 export const SET_LOADING = 'SET_LOADING';
+export const SET_TOP = 'SET_TOP';
+export const SET_LEFT = 'SET_LEFT'

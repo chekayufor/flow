@@ -1,25 +1,60 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 import FlowContext from '../context/flow/flowContext';
+import M from 'materialize-css/dist/js/materialize.min.js';
 
 // import PropTypes from 'prop-types';
 
 const Element = ({ el }) => {
   const flowContext = useContext(FlowContext);
-  const { setCurrentElement } = flowContext;
-  const { color, name } = el;
-
-  // console.log(el.name);
+  const {
+    setCurrentElement,
+    updateElement,
+    currentElement,
+    left,
+    top,
+    setLeft,
+    setTop
+  } = flowContext;
+  const ref = useRef(null);
   const liColor = () => {
-    let backgroundColor = color !== '' ? color : '';
+    let backgroundColor = el.color !== '' ? el.color : '';
     return backgroundColor;
   };
 
+  const onMouseUp = () => {
+    currentElement.top = top;
+    currentElement.left = left;
+
+    const updEl = {
+      id: currentElement.id,
+      name: currentElement.name,
+      valid: currentElement.valid,
+      color: currentElement.color,
+      age: currentElement.age,
+      top,
+      left
+    };
+    updateElement(updEl);
+    setCurrentElement(null);
+    M.toast({ html: 'top and left are set' });
+  };
   return (
     <Li
-      onClick={e => {
+      top={el.top}
+      left={el.left}
+      ref={ref}
+      onMouseEnter={() => {
         setCurrentElement(el);
+        console.log({ currentElement });
       }}
+      onMouseDown={e => {
+        setLeft(e.clientX);
+        setTop(e.clientY);
+      }}
+      onMouseUp={onMouseUp}
+      onMouseLeave={() => console.log('leave')}
+      onClick={() => setCurrentElement(el)}
       style={{ backgroundColor: liColor() }}
     >
       <a
@@ -27,7 +62,7 @@ const Element = ({ el }) => {
         className="modal-trigger"
         style={{ borderRadius: '50%' }}
       >
-        {name}
+        {el.name}
       </a>
     </Li>
   );
@@ -35,6 +70,9 @@ const Element = ({ el }) => {
 
 export default Element;
 const Li = styled.li`
+// top:${props => props.top + 'px'};
+// left:${el => el.left + 'px'};
+ position:relative;
 display:block;
 height: 40px;
 width: 100px;

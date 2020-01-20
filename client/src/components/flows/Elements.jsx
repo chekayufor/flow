@@ -8,15 +8,16 @@ import FlowContext from '../context/flow/flowContext';
 
 const Elements = () => {
   const flowContext = useContext(FlowContext);
-  const { flowElements } = flowContext;
+  const { flowElements, top, left } = flowContext;
+
   return (
     <ul style={{ height: '100%' }}>
       {flowElements === null ? (
         <Fragment />
       ) : (
         flowElements.map(el => (
-          <Draggable>
-            <Element el={el} key={el._id} />
+          <Draggable top={el.top} left={el.left}>
+            <Element el={el} key={el.id} />
           </Draggable>
         ))
       )}

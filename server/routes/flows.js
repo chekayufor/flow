@@ -69,23 +69,25 @@ router.post(
 // @access    Private
 router.put('/:id', auth, async (req, res) => {
     // res.send('Update flows');
-    const { flowName, elements: el, connections: con, date } = req.body;
+    const { flowName, elements, connections, date, user } = req.body;
     console.log('req.body ', req.body);
-    const { id, name, valid, age, color, top, left } = el;
-    const { elIdFrom, elIdTo } = con;
 
+
+    // Build contact object
+    let flowFields = {};
+    // flowFields._id = _id;
+    flowFields.flowName = flowName;
+    if (elements) flowFields.elements = elements;
+    if (connections) flowFields.connections = connections;
+    flowFields.date = date;
+    flowFields.user = user;
 
     try {
-        const newFlow = new Flow({
-            _id: req.flow.id,
-            flowName,
-            elements: [...el],
-            connections: [...con],
-            date,
-            user: req.user.id
-        })
+
         let flow = await Flow.findById(req.params.id);
         console.log({ flow });
+
+
 
         if (!flow) return res.status(404).json({ msg: 'flow not found' });
 
@@ -97,7 +99,7 @@ router.put('/:id', auth, async (req, res) => {
 
         flow = await Flow.findByIdAndUpdate(
             req.params.id,
-            { $set: newFlow },
+            { $set: flowFields },
             { new: true } // if this flow does not exists let create it
         );
         res.json(flow);

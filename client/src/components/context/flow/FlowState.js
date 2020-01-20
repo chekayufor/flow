@@ -17,7 +17,10 @@ import {
     SET_LOADING,
     SET_ELEMENTS,
     UPDATE_ELEMENT,
-    DELETE_ELEMENT
+    DELETE_ELEMENT,
+    SET_TOP,
+    SET_LEFT
+
 } from '../types';
 
 const FlowState = props => {
@@ -28,6 +31,8 @@ const FlowState = props => {
         flowElements: null,
         currentElement: null,
         loading: false,
+        top: null,
+        left: null,
         error: null
     }
 
@@ -40,16 +45,16 @@ const FlowState = props => {
             setLoading();
             const res = await axios.get('/api/flows');
             console.log({ res });
-
             dispatch({
                 type: GET_FLOWS,
                 payload: res.data
             });
         } catch (err) {
-            dispatch({
-                type: FLOW_ERROR,
-                payload: err.response.msg
-            });
+            console.log(err);
+            // dispatch({
+            //     type: FLOW_ERROR,
+            //     payload: err.response.msg
+            // });
         }
     };
 
@@ -70,10 +75,11 @@ const FlowState = props => {
                 payload: res.data
             });
         } catch (err) {
-            dispatch({
-                type: FLOW_ERROR,
-                payload: err.response.msg
-            });
+            // dispatch({
+            //     type: FLOW_ERROR,
+            //     payload: err.response.msg
+            // });
+            console.log(err);
         }
     };
 
@@ -88,10 +94,11 @@ const FlowState = props => {
                 payload: _id
             });
         } catch (err) {
-            dispatch({
-                type: FLOW_ERROR,
-                payload: err.response.msg
-            });
+            // dispatch({
+            //     type: FLOW_ERROR,
+            //     payload: err.response.msg
+            // });
+            console.log(err);
         }
     };
 
@@ -116,10 +123,11 @@ const FlowState = props => {
                 payload: res.data
             });
         } catch (err) {
-            dispatch({
-                type: FLOW_ERROR,
-                payload: err.response.msg
-            });
+            // dispatch({
+            //     type: FLOW_ERROR,
+            //     payload: err.response.msg
+            // });
+            console.log(err);
         }
     };
 
@@ -130,12 +138,21 @@ const FlowState = props => {
 
     // Set Current flow
     const setCurrentFlow = flow => {
-        console.log({ flow })
+        // console.log({ flow })
         dispatch({ type: SET_CURRENT, payload: flow });
     };
     // Clear Current flow
     const clearCurrent = () => {
         dispatch({ type: CLEAR_CURRENT });
+    };
+
+    // Set top
+    const setTop = y => {
+        dispatch({ type: SET_TOP, payload: y });
+    };
+    // Set left
+    const setLeft = x => {
+        dispatch({ type: SET_LEFT, payload: x });
     };
     // Filter Flows
     const filterFlows = text => {
@@ -184,6 +201,8 @@ const FlowState = props => {
                 filtered: state.filtered,
                 error: state.error,
                 loading: state.loading,
+                top: state.top,
+                left: state.left,
                 currentElement: state.currentElement,
                 addFlow,
                 deleteFlow,
@@ -198,7 +217,9 @@ const FlowState = props => {
                 setCurrentElement,
                 updateElement,
                 deleteElement,
-                setLoading
+                setLoading,
+                setTop,
+                setLeft
             }
             }
         >

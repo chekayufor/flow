@@ -3,71 +3,6 @@ import FlowContext from '../context/flow/flowContext';
 
 import styled, { css } from 'styled-components';
 
-// const Draggable = props => {
-//   const { setCurrentElement, currentElement } = flowContext;
-//   const [isDragging, setIsDragging] = useState(false);
-//   const [originalX, setOriginalX] = useState(0);
-//   const [originalY, setOriginalY] = useState(0);
-//   const [translateX, setTranslateX] = useState(0);
-//   const [translateY, setTranslateY] = useState(0);
-//   const [lastTranslateX, setLastTranslateX] = useState(0);
-//   const [lastTranslateY, setLastTranslateY] = useState(0);
-
-//   useEffect(() => {
-//     return () => {
-//       window.removeEventListener('mousemove', this.handleMouseMove);
-//       window.removeEventListener('mouseup', this.handleMouseUp);
-//     };
-//   }, [input]);
-
-//   const handleMouseDown = ({ clientX, clientY }) => {
-//     window.addEventListener('mousemove', handleMouseMove);
-//     window.addEventListener('mouseup', handleMouseUp);
-//     if (props.onDragStart) {
-//       props.onDragStart();
-//     }
-//     setOriginalX(clientX);
-//     setOriginalY(clientY);
-//     setIsDragging(true);
-//   };
-
-//   const handleMouseMove = ({ clientX, clientY }) => {
-//     const { onDrag } = props;
-
-//     if (!isDragging) {
-//       return;
-//     }
-//     let transX = clientX - originalX + lastTranslateX;
-//     let transY = clientY - originalY + lastTranslateY;
-
-//     if (onDrag) {
-//       setTranslateX(transX)
-//       setTranslateY(transY)
-//   };
-//   const handleMouseUp = ({ clientX, clientY }) => {
-//     console.log({ clientX });
-
-//     window.removeEventListener('mousemove', this.handleMouseMove);
-//     window.removeEventListener('mouseup', this.handleMouseUp);
-
-//     this.setState(
-//       {
-//         setOriginalX: 0,
-//         setOriginalY: 0,
-//         setLastTranslateX: clientX,
-//         setLastTranslateY: clientY,
-
-//         isDragging: false
-//       },
-//       () => {
-//         if (this.props.onDragEnd) {
-//           this.props.onDragEnd();
-//         }
-//       }
-//     );
-
-// };
-
 export default class Draggable extends React.Component {
   state = {
     isDragging: false,
@@ -99,6 +34,8 @@ export default class Draggable extends React.Component {
       originalY: clientY,
       isDragging: true
     });
+
+    console.log(this.originalX);
   };
 
   handleMouseMove = ({ clientX, clientY }) => {
@@ -135,9 +72,6 @@ export default class Draggable extends React.Component {
         originalY: 0,
         lastTranslateX: this.state.translateX,
         lastTranslateY: this.state.translateY,
-        positionX: clientX,
-        positionY: clientY,
-
         isDragging: false
       },
       () => {
@@ -150,21 +84,15 @@ export default class Draggable extends React.Component {
 
   render() {
     const { children } = this.props;
-    const {
-      translateX,
-      translateY,
-      positionX,
-      positionY,
-      isDragging
-    } = this.state;
+    const { translateX, translateY, isDragging } = this.state;
 
     return (
       <Container
         onMouseDown={this.handleMouseDown}
         x={translateX}
         y={translateY}
-        posX={positionX}
-        posY={positionY}
+        topY={props => (props ? this.props.top : 'null')}
+        leftX={props => (props ? this.props.left : 'null')}
         isDragging={isDragging}
         style={{ backgroundColor: 'lightblue', width: '100px' }}
       >
@@ -174,12 +102,17 @@ export default class Draggable extends React.Component {
   }
 }
 
-const Container = styled.div.attrs({
-  style: ({ x, y }) => ({
-    transform: `translate(${x}px, ${y}px)`
-  })
-})`
+const Container = styled.div.attrs(props => ({
+  style: {
+    transform: `translate(${props.x}px, ${props.y}px)`,
+    top: `${props.topY}px`,
+    left: `${props.leftX}px`
+  }
+}))`
+  // top: ${props => props.topY + 'px'};
+  // left: ${props => props.left + 'px'};
   cursor: grab;
+  position: absolute;
 
   ${({ isDragging }) =>
     isDragging &&

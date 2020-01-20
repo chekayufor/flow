@@ -8,6 +8,7 @@ import FlowListSelectOptions from './FlowListSelectOptions';
 
 const FlowModal = () => {
   const flowContext = useContext(FlowContext);
+
   const {
     setCurrentFlow,
     currentFlow,
@@ -16,13 +17,13 @@ const FlowModal = () => {
   } = flowContext;
 
   const [selected, setSelected] = useState('');
-
+  // console.log({ selected });
   const onDelete = () => {
     if (selected === '') {
       M.toast({ html: 'Please choose some Flow' });
     } else {
       deleteFlow(JSON.parse(selected)._id);
-      console.log('delete');
+      // console.log('delete');
     }
     setSelected('');
   };
@@ -41,10 +42,10 @@ const FlowModal = () => {
     <div id="flow-list-modal" className="modal">
       <div className="modal-content">
         <h5 style={{ textAlign: 'center' }}>Flow List</h5>
-        <div className="imput-field">
+        <div className="input-field">
           <select
             name="currentFlow"
-            value={currentFlow}
+            value={currentFlow || ''}
             className="browser-default"
             onChange={e => setSelected(e.target.value)}
           >

@@ -6,14 +6,15 @@ const ContentForFlow = props => {
   const ref = useRef(null);
   const dragStart = e => {
     const target = e.target;
-    console.log({ target });
+    // console.log({ target });
     target.id = uuid.v4();
     e.dataTransfer.setData('el_id', target.id);
-    console.log(target.id);
+    // console.log(target.id);
   };
   const dragOver = e => {
     e.stopPropagation();
   };
+
   return (
     <Container>
       <Ul>

@@ -13,6 +13,8 @@ import {
     SET_FLOW_NAME,
     DELETE_ELEMENT,
     SET_LOADING,
+    SET_TOP,
+    SET_LEFT
 
 } from '../types';
 
@@ -27,7 +29,7 @@ export default (state, action) => {
         case ADD_FLOW:
             return {
                 ...state,
-                flowList: [action.payload, ...state.flowsList],
+                flowList: [...state.flowsList, action.payload],
                 loading: false
             };
         case UPDATE_FLOW:
@@ -103,6 +105,16 @@ export default (state, action) => {
             return {
                 ...state,
                 currentFlow: null
+            };
+        case SET_LEFT:
+            return {
+                ...state,
+                left: action.payload
+            };
+        case SET_TOP:
+            return {
+                ...state,
+                top: action.payload
             };
 
         case FLOW_ERROR:

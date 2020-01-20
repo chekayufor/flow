@@ -23,35 +23,46 @@ const FlowSubmitModal = () => {
     }
   }, [currentFlow]);
 
-  const onSubmit = () => {
+  const onSubmit = e => {
+    e.preventDefault();
     if (flowName === '') {
       M.toast({ html: 'Please enter Flow name' });
     } else {
-      const newFlowUpd = {
-        _id: currentFlow._id,
-        flowName,
-        elements: flowElements,
-        connections: [],
-        date: new Date(),
-        user: currentFlow.user
-      };
+      const newFlowUpd = {};
+      newFlowUpd._id = currentFlow._id;
+      newFlowUpd.flowName = flowName;
+      newFlowUpd.elements = flowElements;
+      newFlowUpd.connections = [];
+      newFlowUpd.date = new Date();
+      newFlowUpd.user = currentFlow.user;
+      // console.log({ newFlowUpd });
+
       const newFlow = {
         flowName,
         elements: flowElements,
         connections: [],
         date: new Date()
       };
-      console.log({ newFlow });
-      console.log({ newFlowUpd });
+      console.log('currentFlow._id', currentFlow._id);
       //Post the new Flow
-      // currentFlow._id === null ? addFlow(newFlow) : updateFlow(newFlowUpd);
-      addFlow(newFlow);
-      // updateFlow(newFlowUpd);
+      if (currentFlow._id !== undefined) {
+        updateFlow(newFlowUpd);
+        M.toast({ html: 'Flow updated' });
+      } else {
+        addFlow(newFlow);
+        M.toast({ html: 'Flow added' });
+      }
 
       // Clear Fields
+      let startFlow = {
+        flowName: '',
+        elements: [],
+        connections: [],
+        date: new Date()
+      };
       setFlowName('');
       setFlowElements(null);
-      setCurrentFlow(null);
+      setCurrentFlow('');
     }
   };
 
@@ -64,7 +75,7 @@ const FlowSubmitModal = () => {
             <input
               type="text"
               name="flowName"
-              value={flowName}
+              value={flowName || ''}
               onChange={e => setFlowName(e.target.value)}
             />
             <label htmlFor="flowName" className="active">
